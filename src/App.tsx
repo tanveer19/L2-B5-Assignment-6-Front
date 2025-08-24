@@ -1,10 +1,12 @@
+import { Outlet } from "react-router";
 import "./App.css";
+import CommonLayout from "./components/layout/commonLayout";
 
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      App
-    </div>
+    <CommonLayout>
+      <Outlet />
+    </CommonLayout>
   );
 }
 
