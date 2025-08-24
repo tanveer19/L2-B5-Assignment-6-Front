@@ -14,9 +14,9 @@ export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation<IResponse, IRegisterUser>({
       query: (userInfo) => ({
-        url: "/user/register", // match backend endpoint
+        url: "/user/register",
         method: "POST",
-        data: userInfo, // axiosBaseQuery expects `data`
+        data: userInfo,
       }),
     }),
     login: builder.mutation<IResponse, { email: string; password: string }>({

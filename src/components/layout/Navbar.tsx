@@ -34,7 +34,7 @@ export default function Navbar() {
   const { data } = useUserInfoQuery(undefined);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
-  console.log(data?.data?.email);
+  // console.log(data?.data?.email);
 
   const handleLogout = async () => {
     await logout(undefined);
@@ -103,10 +103,13 @@ export default function Navbar() {
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link, index) => (
-                  <>
-                    {link.role === "PUBLIC" && (
-                      <NavigationMenuItem key={index}>
+                {navigationLinks.map((link) => {
+                  if (
+                    link.role === "PUBLIC" ||
+                    link.role === data?.data?.role
+                  ) {
+                    return (
+                      <NavigationMenuItem key={link.href}>
                         <NavigationMenuLink
                           asChild
                           className="text-muted-foreground hover:text-primary py-1.5 font-medium"
@@ -114,20 +117,10 @@ export default function Navbar() {
                           <Link to={link.href}>{link.label}</Link>
                         </NavigationMenuLink>
                       </NavigationMenuItem>
-                    )}
-
-                    {link.role === data?.data?.role && (
-                      <NavigationMenuItem key={index}>
-                        <NavigationMenuLink
-                          asChild
-                          className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                        >
-                          <Link to={link.href}>{link.label}</Link>
-                        </NavigationMenuLink>
-                      </NavigationMenuItem>
-                    )}
-                  </>
-                ))}
+                    );
+                  }
+                  return null;
+                })}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
