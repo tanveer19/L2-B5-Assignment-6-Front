@@ -2,8 +2,7 @@ import type { ComponentType } from "react";
 
 export type { ILogin } from "./auth.type";
 
-export interface IResponse<T> {
-  statusCode: number;
+export interface IResponse<T = unknown> {
   success: boolean;
   message: string;
   data: T;

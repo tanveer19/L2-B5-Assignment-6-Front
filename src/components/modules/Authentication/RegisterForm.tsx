@@ -15,7 +15,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Password from "@/components/ui/Password";
 import { Link, useNavigate } from "react-router";
-import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import {
+  IRegisterUser,
+  useRegisterMutation,
+} from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
 
 const registerSchema = z
@@ -27,6 +30,7 @@ const registerSchema = z
       })
       .max(50),
     email: z.email(),
+    phone: z.string().min(10, { message: "Phone must be at least 10 digits" }),
     password: z.string().min(8, {
       error: "password is too short",
     }),
@@ -51,24 +55,29 @@ export function RegisterForm({
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       password: "",
       confirmPassword: "",
     },
   });
 
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
-    const userInfo = {
+    const userInfo: IRegisterUser = {
       name: data.name,
-      email: data.email,
+      email: data.email || undefined,
       password: data.password,
+      phone: data.phone, // Add a phone input field in your form
+      role: "USER", // default role for registration
     };
     try {
-      const result = await register(userInfo).unwrap();
-      console.log(result);
+      await register(userInfo).unwrap();
       toast.success("User created successfully");
-      navigate("/verify");
-    } catch (error) {
+      navigate("/login"); // or /verify if you have verification
+    } catch (error: any) {
       console.error(error);
+      toast.error(
+        error?.data?.message || "Registration failed. Check your input."
+      );
     }
   };
 
@@ -122,6 +131,20 @@ export function RegisterForm({
             />
             <FormField
               control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter phone number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -157,20 +180,6 @@ export function RegisterForm({
             </Button>
           </form>
         </Form>
-
-        <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-          <span className="relative z-10 bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full cursor-pointer"
-        >
-          Login with Google
-        </Button>
       </div>
 
       <div className="text-center text-sm">

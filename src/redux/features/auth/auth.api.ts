@@ -1,8 +1,25 @@
 import { baseApi } from "@/redux/baseApi";
+import type { IResponse } from "@/types";
+
+export interface IRegisterUser {
+  name: string;
+  email?: string;
+  password: string;
+  phone: string;
+  role?: "USER" | "AGENT" | "ADMIN";
+  address?: string;
+}
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    register: builder.mutation<IResponse, IRegisterUser>({
+      query: (userInfo) => ({
+        url: "/user/register", // match backend endpoint
+        method: "POST",
+        data: userInfo, // axiosBaseQuery expects `data`
+      }),
+    }),
+    login: builder.mutation<IResponse, { email: string; password: string }>({
       query: (userInfo) => ({
         url: "/auth/login",
         method: "POST",
@@ -16,15 +33,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
-    register: builder.mutation({
-      query: (userInfo) => ({
-        url: "/user/register",
-        method: "POST",
-        data: userInfo,
-      }),
-    }),
-
-    userInfo: builder.query({
+    userInfo: builder.query<IResponse, void>({
       query: () => ({
         url: "/user/me",
         method: "GET",
@@ -37,6 +46,6 @@ export const authApi = baseApi.injectEndpoints({
 export const {
   useRegisterMutation,
   useLoginMutation,
-  useLogoutMutation,
   useUserInfoQuery,
+  useLogoutMutation,
 } = authApi;
