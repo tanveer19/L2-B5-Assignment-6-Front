@@ -19,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
         data: userInfo,
       }),
     }),
-    login: builder.mutation<IResponse, { email: string; password: string }>({
+    login: builder.mutation<IResponse, { phone: string; password: string }>({
       query: (userInfo) => ({
         url: "/auth/login",
         method: "POST",

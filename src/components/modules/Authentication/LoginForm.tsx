@@ -21,9 +21,17 @@ export function LoginForm({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
-  const form = useForm();
+
+  type LoginFormValues = {
+    phone: string;
+    password: string;
+  };
+
+  const form = useForm<LoginFormValues>();
+
   const [login] = useLoginMutation();
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
 
@@ -31,15 +39,15 @@ export function LoginForm({
         toast.success("Logged in successfully");
         navigate("/");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
 
-      if (err.data.message === "Password does not match") {
-        toast.error("invalid credentials");
+      if (err?.data?.message === "Password does not match") {
+        toast.error("Invalid credentials");
       }
-      if (err.data.message === "User is not verified") {
+      if (err?.data?.message === "User is not verified") {
         toast.error("Your account is not verified");
-        navigate("/verify", { state: data.email });
+        navigate("/verify", { state: data.phone });
       }
     }
   };

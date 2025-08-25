@@ -31,7 +31,7 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
-  const { data } = useUserInfoQuery(undefined);
+  const { data: userInfo, isLoading } = useUserInfoQuery();
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   // console.log(data?.data?.email);
@@ -106,7 +106,7 @@ export default function Navbar() {
                 {navigationLinks.map((link) => {
                   if (
                     link.role === "PUBLIC" ||
-                    link.role === data?.data?.role
+                    link.role === userInfo?.data?.role
                   ) {
                     return (
                       <NavigationMenuItem key={link.href}>
@@ -128,7 +128,7 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          {data?.data?.email && (
+          {userInfo?.data?.phone ? (
             <Button
               onClick={handleLogout}
               variant="outline"
@@ -136,8 +136,7 @@ export default function Navbar() {
             >
               Logout
             </Button>
-          )}
-          {!data?.data?.email && (
+          ) : (
             <Button asChild className="text-sm">
               <Link to="/login">Login</Link>
             </Button>
