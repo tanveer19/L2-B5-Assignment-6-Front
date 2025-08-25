@@ -37,6 +37,7 @@ const registerSchema = z
     confirmPassword: z.string().min(8, {
       error: "password is too short",
     }),
+    role: z.enum(["USER", "AGENT"]),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "password do not match",
@@ -66,8 +67,8 @@ export function RegisterForm({
       name: data.name,
       email: data.email || undefined,
       password: data.password,
-      phone: data.phone, // Add a phone input field in your form
-      role: "USER", // default role for registration
+      phone: data.phone,
+      role: data.role,
     };
     try {
       await register(userInfo).unwrap();
@@ -175,6 +176,23 @@ export function RegisterForm({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <select {...field} className="border rounded-md p-2 w-full">
+                      <option value="USER">User</option>
+                      <option value="AGENT">Agent</option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <Button type="submit" className="w-full">
               Submit
             </Button>

@@ -10,7 +10,10 @@ import {
 import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
-import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import {
+  useLoginMutation,
+  useUserInfoQuery,
+} from "@/redux/features/auth/auth.api";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
@@ -30,6 +33,9 @@ export function LoginForm({
   const form = useForm<LoginFormValues>();
 
   const [login] = useLoginMutation();
+  const { data: userInfo, refetch } = useUserInfoQuery(undefined, {
+    skip: true, // don’t call automatically
+  });
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
@@ -38,6 +44,13 @@ export function LoginForm({
       if (res.success) {
         toast.success("Logged in successfully");
         navigate("/");
+
+        const user = await refetch().unwrap();
+
+        // redirect based on role
+        if (user?.data?.role === "admin") navigate("/admin");
+        else if (user?.data?.role === "agent") navigate("/agent");
+        else navigate("/user");
       }
     } catch (err: any) {
       console.error(err);
