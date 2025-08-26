@@ -13,6 +13,8 @@ import {
   useLoginMutation,
   useUserInfoQuery,
 } from "@/redux/features/auth/auth.api";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hook";
 import { TRole } from "@/types";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
@@ -40,7 +42,7 @@ export function LoginForm({
   const [login] = useLoginMutation();
 
   const { data, refetch, isLoading, isError } = useUserInfoQuery();
-
+  const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
@@ -51,7 +53,7 @@ export function LoginForm({
         // refetch user info from server (cookie auth)
         const userRes = await refetch().unwrap();
         const user: IUserInfo = userRes.data as IUserInfo;
-
+        dispatch(setUser(res.data));
         // redirect based on role
         if (userRes?.data?.role === "ADMIN") {
           console.log("Redirecting to /admin");

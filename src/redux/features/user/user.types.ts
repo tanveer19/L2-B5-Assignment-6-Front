@@ -20,8 +20,9 @@ export interface ITransaction {
   amount: number;
   type: TTransactionType;
   status: "PENDING" | "SUCCESS" | "FAILED";
-  from?: string; // phone or user id
-  to?: string;
+  from: string | { _id: string; phone: string };
+  to: string | { _id: string; phone: string };
+
   createdAt: string;
   narrative?: string;
 }
