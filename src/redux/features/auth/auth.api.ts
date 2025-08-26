@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IResponse } from "@/types";
+import type { IResponse, IUser, TRole } from "@/types";
 
 export interface IRegisterUser {
   name: string;
@@ -33,7 +33,12 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
-    userInfo: builder.query<IResponse, void>({
+    // auth.api.ts
+    // auth.api.ts
+    userInfo: builder.query<
+      IResponse<{ role: TRole; phone: string; name: string }>,
+      void
+    >({
       query: () => ({
         url: "/user/me",
         method: "GET",

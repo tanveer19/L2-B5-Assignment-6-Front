@@ -8,34 +8,38 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import config from "@/config";
 import { cn } from "@/lib/utils";
 import {
   useLoginMutation,
   useUserInfoQuery,
 } from "@/redux/features/auth/auth.api";
+import { TRole } from "@/types";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
+type LoginFormValues = {
+  phone: string;
+  password: string;
+};
+
+type IUserInfo = {
+  role: TRole;
+  phone: string;
+  name: string;
+};
 export function LoginForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
 
-  type LoginFormValues = {
-    phone: string;
-    password: string;
-  };
-
   const form = useForm<LoginFormValues>();
 
   const [login] = useLoginMutation();
-  const { data: userInfo, refetch } = useUserInfoQuery(undefined, {
-    skip: true, // don’t call automatically
-  });
+
+  const { data, refetch, isLoading, isError } = useUserInfoQuery();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
@@ -43,14 +47,22 @@ export function LoginForm({
 
       if (res.success) {
         toast.success("Logged in successfully");
-        navigate("/");
 
-        const user = await refetch().unwrap();
+        // refetch user info from server (cookie auth)
+        const userRes = await refetch().unwrap();
+        const user: IUserInfo = userRes.data as IUserInfo;
 
         // redirect based on role
-        if (user?.data?.role === "admin") navigate("/admin");
-        else if (user?.data?.role === "agent") navigate("/agent");
-        else navigate("/user");
+        if (userRes?.data?.role === "ADMIN") {
+          console.log("Redirecting to /admin");
+          navigate("/admin");
+        } else if (userRes?.data?.role === "AGENT") {
+          console.log("Redirecting to /agent");
+          navigate("/agent");
+        } else {
+          console.log("Redirecting to /user");
+          navigate("/user");
+        }
       }
     } catch (err: any) {
       console.error(err);

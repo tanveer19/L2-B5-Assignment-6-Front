@@ -19,8 +19,14 @@ import {
   useUserInfoQuery,
 } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
-import { role } from "@/constants/role";
+import { TRole } from "@/types";
+import { role } from "@/types/role";
 
+interface IUser {
+  _id: string;
+  name: string;
+  role: TRole;
+}
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
@@ -32,6 +38,7 @@ const navigationLinks = [
 
 export default function Navbar() {
   const { data: userInfo, isLoading } = useUserInfoQuery();
+
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   // console.log(data?.data?.email);
@@ -128,7 +135,9 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          {userInfo?.data?.phone ? (
+          {isLoading ? (
+            <span className="text-sm text-gray-500">Checking...</span>
+          ) : userInfo?.data?.role ? (
             <Button
               onClick={handleLogout}
               variant="outline"

@@ -11,6 +11,8 @@ import { withAuth } from "@/utils/withAuth";
 import Unauthorized from "@/pages/Unauthorized";
 import type { TRole } from "@/types";
 import { role } from "@/constants/role";
+import User from "@/pages/User/User";
+import Agent from "@/pages/Agent/Agent";
 
 export const router = createBrowserRouter([
   {
@@ -27,17 +29,25 @@ export const router = createBrowserRouter([
     Component: withAuth(DashboardLayout, role.admin as TRole),
     path: "/admin",
     children: [
-      { index: true, element: <Navigate to="/admin/analytics" /> },
+      { index: true, element: <Navigate to="/admin" /> },
       ...generateRoutes(adminSidebarItems),
     ],
   },
+  // {
+  //   Component: withAuth(DashboardLayout, role.user as TRole),
+  //   path: "/user",
+  //   children: [
+  //     { index: true, element: <Navigate to="/user" /> },
+  //     ...generateRoutes(userSidebarItems),
+  //   ],
+  // },
   {
-    Component: withAuth(DashboardLayout, role.user as TRole),
+    Component: User,
     path: "/user",
-    children: [
-      { index: true, element: <Navigate to="/user/bookings" /> },
-      ...generateRoutes(userSidebarItems),
-    ],
+  },
+  {
+    Component: Agent,
+    path: "/agent",
   },
   {
     Component: Login,
