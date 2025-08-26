@@ -1,8 +1,8 @@
+import { ModeToggle } from "@/components/layout/ModeToggler";
 import { useGetProfileQuery } from "@/redux/features/user/user.api";
 import { Link, Outlet } from "react-router";
-import { ModeToggle } from "./ModeToggler";
 
-export default function DashboardLayout() {
+export default function UserDashboardLayout() {
   const { data: profileRes, isLoading } = useGetProfileQuery();
 
   const profile = profileRes?.data;
