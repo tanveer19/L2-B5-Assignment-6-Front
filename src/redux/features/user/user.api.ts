@@ -1,4 +1,3 @@
-// src/features/user/user.api.ts
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse } from "@/types";
 import type { IWallet, ITransaction, IUserProfile } from "./user.types";

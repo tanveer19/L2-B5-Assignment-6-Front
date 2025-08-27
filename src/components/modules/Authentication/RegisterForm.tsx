@@ -23,24 +23,15 @@ import { toast } from "sonner";
 
 const registerSchema = z
   .object({
-    name: z
-      .string()
-      .min(3, {
-        error: "Name is too short",
-      })
-      .max(50),
-    email: z.email(),
+    name: z.string().min(3, { message: "Name is too short" }).max(50),
+    email: z.string().email(),
     phone: z.string().min(10, { message: "Phone must be at least 10 digits" }),
-    password: z.string().min(8, {
-      error: "password is too short",
-    }),
-    confirmPassword: z.string().min(8, {
-      error: "password is too short",
-    }),
+    password: z.string().min(8, { message: "Password is too short" }),
+    confirmPassword: z.string().min(8, { message: "Password is too short" }),
     role: z.enum(["USER", "AGENT"]),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "password do not match",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
@@ -59,6 +50,7 @@ export function RegisterForm({
       phone: "",
       password: "",
       confirmPassword: "",
+      role: "USER", // ✅ important: set default role
     },
   });
 
@@ -66,10 +58,13 @@ export function RegisterForm({
     const userInfo: IRegisterUser = {
       name: data.name,
       email: data.email || undefined,
-      password: data.password,
       phone: data.phone,
-      role: data.role,
+      password: data.password,
+      role: data.role, // ✅ ensure role is included
     };
+
+    console.log("Submitting user:", userInfo); // optional debug
+
     try {
       await register(userInfo).unwrap();
       toast.success("User created successfully");
@@ -94,6 +89,7 @@ export function RegisterForm({
       <div className="grid gap-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Name */}
             <FormField
               control={form.control}
               name="name"
@@ -103,13 +99,12 @@ export function RegisterForm({
                   <FormControl>
                     <Input placeholder="John Doe" {...field} />
                   </FormControl>
-                  <FormDescription className="sr-only">
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Email */}
             <FormField
               control={form.control}
               name="email"
@@ -118,18 +113,17 @@ export function RegisterForm({
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="john.doe@company.com"
                       type="email"
+                      placeholder="john.doe@example.com"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription className="sr-only">
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Phone */}
             <FormField
               control={form.control}
               name="phone"
@@ -144,6 +138,7 @@ export function RegisterForm({
               )}
             />
 
+            {/* Password */}
             <FormField
               control={form.control}
               name="password"
@@ -153,13 +148,12 @@ export function RegisterForm({
                   <FormControl>
                     <Password {...field} />
                   </FormControl>
-                  <FormDescription className="sr-only">
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Confirm Password */}
             <FormField
               control={form.control}
               name="confirmPassword"
@@ -169,13 +163,12 @@ export function RegisterForm({
                   <FormControl>
                     <Password {...field} />
                   </FormControl>
-                  <FormDescription className="sr-only">
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Role */}
             <FormField
               control={form.control}
               name="role"
