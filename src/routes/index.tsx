@@ -12,6 +12,8 @@ import UserOverviewPage from "@/pages/User/UserOverviewPage";
 import UserSendMoneyPage from "@/pages/User/UserSendMoneyPage";
 import UserTransactionTable from "@/pages/User/UserTransactionTable";
 import UserProfilePage from "@/pages/User/UserProfilePage";
+import UserDepositPage from "@/pages/User/UserDeposit";
+import UserWithdrawPage from "@/pages/User/UserWithdraw";
 
 export const router = createBrowserRouter([
   {
@@ -30,8 +32,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: UserOverviewPage },
       { path: "send", Component: UserSendMoneyPage },
-      // { path: "deposit", Component: DepositPage },
-      // { path: "withdraw", Component: WithdrawPage },
+      { path: "deposit", Component: UserDepositPage },
+      { path: "withdraw", Component: UserWithdrawPage },
       { path: "transactions", Component: UserTransactionTable },
       { path: "profile", Component: UserProfilePage },
     ],

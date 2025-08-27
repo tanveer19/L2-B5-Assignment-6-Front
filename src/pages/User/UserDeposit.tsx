@@ -12,45 +12,42 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSendMoneyMutation } from "@/redux/features/user/user.api";
+import { useDepositMutation } from "@/redux/features/user/user.api"; // your API
 
 const formSchema = z.object({
-  recipient: z.string().min(3, "Enter phone or email"),
-  amount: z.number().min(50, "Minimum send is 50৳"),
+  cardNumber: z.string().min(16, "Card number must be 16 digits"),
+  amount: z.number().min(50, "Minimum deposit is 50৳"),
 });
 
-export default function UserSendMoneyPage() {
-  const [sendMoney, { isLoading }] = useSendMoneyMutation();
+export default function UserDepositPage() {
+  const [deposit, { isLoading }] = useDepositMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { recipient: "", amount: 100 },
+    defaultValues: { cardNumber: "", amount: 100 },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await sendMoney(values);
+    await deposit(values);
     form.reset();
   }
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg rounded-2xl">
       <CardHeader>
-        <CardTitle>Send Money</CardTitle>
+        <CardTitle>Deposit to Wallet</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="recipient"
+              name="cardNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Recipient (Phone or Email)</FormLabel>
+                  <FormLabel>Card Number</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="01812345678 or user@example.com"
-                      {...field}
-                    />
+                    <Input placeholder="1234 5678 9012 3456" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -63,14 +60,14 @@ export default function UserSendMoneyPage() {
                 <FormItem>
                   <FormLabel>Amount (৳)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="200" {...field} />
+                    <Input type="number" placeholder="100" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? "Sending..." : "Send Money"}
+              {isLoading ? "Processing..." : "Deposit"}
             </Button>
           </form>
         </Form>
