@@ -28,8 +28,11 @@ export default function UserSendMoneyPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await sendMoney(values);
-    form.reset();
+    await sendMoney({
+      to: values.recipient,
+      amount: values.amount,
+    });
+    // form.reset();
   }
 
   return (
@@ -63,7 +66,12 @@ export default function UserSendMoneyPage() {
                 <FormItem>
                   <FormLabel>Amount (৳)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="200" {...field} />
+                    <Input
+                      type="number"
+                      min={50}
+                      placeholder="200"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

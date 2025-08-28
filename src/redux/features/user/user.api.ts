@@ -5,7 +5,7 @@ import type { IWallet, ITransaction, IUserProfile } from "./user.types";
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getWallet: builder.query<IResponse<IWallet>, void>({
-      query: () => ({ url: "/wallet/me", method: "GET" }),
+      query: () => ({ url: "/wallet/my", method: "GET" }),
       providesTags: ["USER"],
     }),
 

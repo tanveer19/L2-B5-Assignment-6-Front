@@ -5,10 +5,10 @@ export const walletApi = baseApi.injectEndpoints({
     // Fetch logged-in user's wallet
     getMyWallet: builder.query({
       query: () => ({
-        url: "/wallet/me",
+        url: "/wallet/my",
         method: "GET",
       }),
-      providesTags: ["Wallet"],
+      providesTags: ["WALLET"],
     }),
 
     // Fetch transactions
@@ -18,7 +18,7 @@ export const walletApi = baseApi.injectEndpoints({
         method: "GET",
         params, // supports pagination, filters
       }),
-      providesTags: ["Transaction"],
+      providesTags: ["TRANSACTION"],
     }),
 
     // Deposit money
@@ -28,7 +28,7 @@ export const walletApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Wallet", "Transaction"],
+      invalidatesTags: ["WALLET", "TRANSACTION"],
     }),
 
     // Withdraw money
@@ -38,7 +38,7 @@ export const walletApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Wallet", "Transaction"],
+      invalidatesTags: ["WALLET", "TRANSACTION"],
     }),
 
     // Send money to another user
@@ -48,7 +48,7 @@ export const walletApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Wallet", "Transaction"],
+      invalidatesTags: ["WALLET", "TRANSACTION"],
     }),
   }),
 });
