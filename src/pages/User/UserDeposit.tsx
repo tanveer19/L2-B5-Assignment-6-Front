@@ -12,11 +12,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useDepositMutation } from "@/redux/features/user/user.api"; // your API
+import { useDepositMutation } from "@/redux/features/user/user.api";
+import { toast } from "sonner";
 
 const formSchema = z.object({
-  cardNumber: z.string().min(16, "Card number must be 16 digits"),
-  amount: z.number().min(50, "Minimum deposit is 50৳"),
+  cardNumber: z.string(),
+  amount: z.number(),
 });
 
 export default function UserDepositPage() {
@@ -28,8 +29,13 @@ export default function UserDepositPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await deposit(values);
-    form.reset();
+    try {
+      await deposit(values).unwrap(); // unwrap gives you the actual response or throws
+      toast.success("Deposit successful!");
+      form.reset();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Deposit failed. Please try again.");
+    }
   }
 
   return (
@@ -60,7 +66,13 @@ export default function UserDepositPage() {
                 <FormItem>
                   <FormLabel>Amount (৳)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="100" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="100"
+                      {...field}
+                      value={field.value ?? ""}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

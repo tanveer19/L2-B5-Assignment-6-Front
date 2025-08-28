@@ -61,7 +61,7 @@ export const userApi = baseApi.injectEndpoints({
     // deposit (agent simulation) - in real app agents do cash in; frontend calls endpoint to simulate
     deposit: builder.mutation<
       IResponse<ITransaction>,
-      { userPhone: string; amount: number; note?: string }
+      { cardNumber: string; amount: number; note?: string }
     >({
       query: (payload) => ({
         url: "/wallet/deposit",
