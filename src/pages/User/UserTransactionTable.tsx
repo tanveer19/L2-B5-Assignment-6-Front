@@ -108,11 +108,7 @@ export default function UserTransactionTable({
                   <td>{tx.type}</td>
                   <td className="font-medium">{tx.amount}</td>
                   <td>
-                    {typeof tx.from === "object"
-                      ? tx.from.phone
-                      : typeof tx.to === "object"
-                      ? tx.to.phone
-                      : tx.from ?? tx.to ?? "-"}
+                    {tx.from?.phone ?? tx.to?.phone ?? tx.from ?? tx.to ?? "-"}
                   </td>
 
                   <td>{tx.status}</td>
