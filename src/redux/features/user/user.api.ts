@@ -6,7 +6,7 @@ export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getWallet: builder.query<IResponse<IWallet>, void>({
       query: () => ({ url: "/wallet/my", method: "GET" }),
-      providesTags: ["USER"],
+      providesTags: ["WALLET"],
     }),
 
     // recent transactions for dashboard (small list)
@@ -19,7 +19,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "GET",
         params: { limit: arg?.limit ?? 5 },
       }),
-      providesTags: ["USER"],
+      providesTags: ["WALLET"],
     }),
 
     // paginated transactions with filters
@@ -42,7 +42,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "GET",
         params: { page, limit, type, fromDate, toDate, search },
       }),
-      providesTags: ["USER"],
+      providesTags: ["WALLET"],
     }),
 
     // send money
@@ -55,7 +55,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST",
         data: payload,
       }),
-      invalidatesTags: ["USER"],
+      invalidatesTags: ["WALLET"],
     }),
 
     // deposit (agent simulation) - in real app agents do cash in; frontend calls endpoint to simulate
@@ -68,7 +68,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST",
         data: payload,
       }),
-      invalidatesTags: ["USER"],
+      invalidatesTags: ["WALLET"],
     }),
 
     // withdraw
@@ -81,7 +81,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST",
         data: payload,
       }),
-      invalidatesTags: ["USER"],
+      invalidatesTags: ["WALLET"],
     }),
 
     // user profile
