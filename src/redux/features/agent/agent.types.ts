@@ -21,7 +21,6 @@ export interface ITransaction {
   status: "PENDING" | "SUCCESS" | "FAILED";
   from: string | { _id: string; phone: string };
   to: string | { _id: string; phone: string };
-
   createdAt: string;
   narrative?: string;
 }
