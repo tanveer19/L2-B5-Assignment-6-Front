@@ -2,11 +2,9 @@ import App from "@/App";
 import About from "@/pages/About";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import { createBrowserRouter, Navigate } from "react-router";
+import { createBrowserRouter } from "react-router";
 import { withAuth } from "@/utils/withAuth";
 import Unauthorized from "@/pages/Unauthorized";
-import User from "@/pages/User/UserDashboardLayout";
-import Agent from "@/pages/Agent/Agent";
 import UserDashboardLayout from "@/pages/User/UserDashboardLayout";
 import UserOverviewPage from "@/pages/User/UserOverviewPage";
 import UserSendMoneyPage from "@/pages/User/UserSendMoneyPage";
@@ -14,6 +12,7 @@ import UserTransactionTable from "@/pages/User/UserTransactionTable";
 import UserProfilePage from "@/pages/User/UserProfilePage";
 import UserDepositPage from "@/pages/User/UserDeposit";
 import UserWithdrawPage from "@/pages/User/UserWithdraw";
+import AgentDashboardLayout from "@/pages/Agent/AgentDashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +38,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    Component: Agent,
+    Component: AgentDashboardLayout,
     path: "/agent",
   },
   {
@@ -50,7 +49,6 @@ export const router = createBrowserRouter([
     Component: Register,
     path: "/register",
   },
-
   {
     Component: Unauthorized,
     path: "/unauthorized",

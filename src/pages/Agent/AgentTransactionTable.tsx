@@ -2,7 +2,7 @@ import { useGetTransactionsQuery } from "@/redux/features/user/user.api";
 import { ITransaction } from "@/redux/features/user/user.types";
 import { useEffect, useState } from "react";
 
-export default function UserTransactionTable({
+export default function AgentTransactionTable({
   pageSize = 10,
 }: {
   pageSize?: number;
