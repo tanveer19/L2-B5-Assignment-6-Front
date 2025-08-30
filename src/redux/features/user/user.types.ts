@@ -7,12 +7,7 @@ export interface IWallet {
   updatedAt?: string;
 }
 
-export type TTransactionType =
-  | "DEPOSIT"
-  | "WITHDRAW"
-  | "SEND"
-  | "RECEIVE"
-  | "AGENT_CASHIN";
+export type TTransactionType = "DEPOSIT" | "WITHDRAW" | "SEND" | "RECEIVE";
 
 export interface ITransaction {
   _id: string;
