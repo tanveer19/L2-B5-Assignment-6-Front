@@ -75,12 +75,35 @@ export const agentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["WALLET"],
     }),
+    getAgentTransactions: builder.query<
+      IResponse<{
+        data: ITransaction[];
+        meta: { total: number; page: number; limit: number };
+      }>,
+      {
+        page?: number;
+        limit?: number;
+        type?: string;
+        fromDate?: string;
+        toDate?: string;
+        search?: string;
+      }
+    >({
+      query: ({ page = 1, limit = 10, type, fromDate, toDate, search }) => ({
+        url: "/agent/transactions",
+        method: "GET",
+        params: { page, limit, type, fromDate, toDate, search },
+      }),
+      providesTags: ["AGENT_TRANSACTIONS"],
+    }),
 
+    // ✅ ADD THIS: Agent summary
     getAgentSummary: builder.query<IResponse<IAgentSummary>, void>({
       query: () => ({ url: "/agent/summary", method: "GET" }),
       providesTags: ["AGENT_SUMMARY"],
     }),
 
+    // ✅ ADD THIS: Agent activity
     getAgentActivity: builder.query<
       IResponse<IAgentActivity[]>,
       { limit?: number }
@@ -103,4 +126,5 @@ export const {
   useCashoutMutation,
   useGetAgentSummaryQuery,
   useGetAgentActivityQuery,
+  useGetAgentTransactionsQuery,
 } = agentApi;

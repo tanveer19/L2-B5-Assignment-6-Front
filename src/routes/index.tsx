@@ -16,6 +16,7 @@ import AgentDashboardLayout from "@/pages/Agent/AgentDashboardLayout";
 import AgentOverviewPage from "@/pages/Agent/AgentOverviewPage";
 import AgentCashIn from "@/pages/Agent/AgentCashIn";
 import AgentCashOut from "@/pages/Agent/AgentCashOut";
+import AgentTransactionTable from "@/pages/Agent/AgentTransactionTable";
 
 export const router = createBrowserRouter([
   {
@@ -47,8 +48,8 @@ export const router = createBrowserRouter([
       { index: true, Component: AgentOverviewPage },
       { path: "cashin", Component: AgentCashIn },
       { path: "cashout", Component: AgentCashOut },
-      // { path: "transactions", Component: UserTransactionTable },
-      // { path: "profile", Component: UserProfilePage },
+      { path: "transactions", Component: AgentTransactionTable },
+      { path: "profile", Component: UserProfilePage },
     ],
   },
   {

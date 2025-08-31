@@ -1,65 +1,12 @@
-// import {
-//   useGetRecentTransactionsQuery,
-//   useGetWalletQuery,
-// } from "@/redux/features/user/user.api";
-// import AgentOverviewCard from "./AgentOverViewCard";
-// import { Loader2 } from "lucide-react";
-// import AgentTransactionTable from "./AgentTransactionTable";
-
-// export default function AgentOverviewPage() {
-//   const { data: walletRes, isLoading: walletLoading } = useGetWalletQuery();
-//   const { data: recentTxRes, isLoading: txLoading } =
-//     useGetRecentTransactionsQuery({ limit: 5 });
-
-//   const wallet = walletRes?.data;
-//   const recent = recentTxRes?.data ?? [];
-
-//   return (
-//     <div className="space-y-6">
-//       {/* Top Overview Cards */}
-//       <div className="grid md:grid-cols-3 gap-4">
-//         {/* Wallet Balance */}
-//         <AgentOverviewCard title="Wallet Balance" loading={walletLoading}>
-//           <div className="text-3xl font-bold flex items-center gap-2">
-//             {walletLoading ? (
-//               <Loader2 className="animate-spin h-6 w-6 text-muted-foreground" />
-//             ) : wallet ? (
-//               `${wallet.balance.toLocaleString()} BDT`
-//             ) : (
-//               "—"
-//             )}
-//           </div>
-//         </AgentOverviewCard>
-
-//         {/* Quick Actions */}
-//         <AgentOverviewCard title="Quick Actions">
-//           <div className="flex flex-wrap gap-2">
-//             <a href="/user/send" className="btn">
-//               Send
-//             </a>
-//             <a href="/user/deposit" className="btn-outline">
-//               Deposit
-//             </a>
-//             <a href="/user/withdraw" className="btn-outline">
-//               Withdraw
-//             </a>
-//           </div>
-//         </AgentOverviewCard>
-//       </div>
-
-//       {/* Transactions Table */}
-//       <div className="bg-white p-4 rounded-lg shadow-sm">
-//         <h3 className="font-semibold mb-4">Recent Transactions</h3>
-//         <AgentTransactionTable pageSize={6} />
-//       </div>
-//     </div>
-//   );
-// }
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGetAgentSummaryQuery } from "@/redux/features/agent/agent.api";
+import {
+  useGetAgentSummaryQuery,
+  useGetAgentTransactionsQuery,
+} from "@/redux/features/agent/agent.api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "react-router";
 import { ArrowUp, ArrowDown, Activity, History } from "lucide-react";
+import { ITransaction } from "@/redux/features/agent/agent.types";
 
 export default function AgentOverview() {
   const { data: summary, isLoading } = useGetAgentSummaryQuery();
@@ -120,6 +67,16 @@ export default function AgentOverview() {
   );
 }
 
+// ✅ Add proper TypeScript interface for StatCard props
+interface StatCardProps {
+  title: string;
+  value: number;
+  prefix?: string;
+  description: string;
+  icon: React.ComponentType<any>;
+  color: string;
+}
+
 const StatCard = ({
   title,
   value,
@@ -127,7 +84,7 @@ const StatCard = ({
   description,
   icon: Icon,
   color,
-}) => (
+}: StatCardProps) => (
   <Card>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <CardTitle className="text-sm font-medium">{title}</CardTitle>
@@ -179,6 +136,27 @@ const RecentActivity = () => {
     limit: 5,
   });
 
+  // ✅ Safe phone number access function
+  const getCounterpartyPhone = (transaction: ITransaction) => {
+    // Check if 'to' is a populated object with phone property
+    if (
+      transaction.to &&
+      typeof transaction.to === "object" &&
+      "phone" in transaction.to
+    ) {
+      return (transaction.to as any).phone;
+    }
+    // Check if 'from' is a populated object with phone property
+    if (
+      transaction.from &&
+      typeof transaction.from === "object" &&
+      "phone" in transaction.from
+    ) {
+      return (transaction.from as any).phone;
+    }
+    return "-";
+  };
+
   if (isLoading) {
     return (
       <Card>
@@ -196,6 +174,8 @@ const RecentActivity = () => {
     );
   }
 
+  const recentTransactions = transactions?.data?.data?.slice(0, 5) || [];
+
   return (
     <Card>
       <CardHeader>
@@ -203,7 +183,7 @@ const RecentActivity = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {transactions?.data?.data?.slice(0, 5).map((transaction) => (
+          {recentTransactions.map((transaction) => (
             <div
               key={transaction._id}
               className="flex items-center justify-between p-3 border rounded-lg"
@@ -211,12 +191,16 @@ const RecentActivity = () => {
               <div className="flex items-center gap-3">
                 <div
                   className={`p-2 rounded-full ${
-                    transaction.type === "DEPOSIT"
+                    transaction.type === "DEPOSIT" ||
+                    transaction.type === "RECEIVE" ||
+                    transaction.type === "AGENT_CASHIN"
                       ? "bg-green-100 text-green-600"
                       : "bg-red-100 text-red-600"
                   }`}
                 >
-                  {transaction.type === "DEPOSIT" ? (
+                  {transaction.type === "DEPOSIT" ||
+                  transaction.type === "RECEIVE" ||
+                  transaction.type === "AGENT_CASHIN" ? (
                     <ArrowUp className="h-4 w-4" />
                   ) : (
                     <ArrowDown className="h-4 w-4" />
@@ -227,30 +211,38 @@ const RecentActivity = () => {
                     {transaction.type.toLowerCase()}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(transaction.timestamp).toLocaleDateString()}
+                    {new Date(transaction.createdAt).toLocaleDateString()}{" "}
+                    {/* ✅ Use createdAt instead of timestamp */}
                   </p>
                 </div>
               </div>
               <div className="text-right">
                 <p
                   className={`font-semibold ${
-                    transaction.type === "DEPOSIT"
+                    transaction.type === "DEPOSIT" ||
+                    transaction.type === "RECEIVE" ||
+                    transaction.type === "AGENT_CASHIN"
                       ? "text-green-600"
                       : "text-red-600"
                   }`}
                 >
-                  {transaction.type === "DEPOSIT" ? "+" : "-"}৳
-                  {transaction.amount}
+                  {transaction.type === "DEPOSIT" ||
+                  transaction.type === "RECEIVE" ||
+                  transaction.type === "AGENT_CASHIN"
+                    ? "+"
+                    : "-"}
+                  ৳{transaction.amount.toLocaleString()}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {transaction.toPhone}
+                  {getCounterpartyPhone(transaction)}{" "}
+                  {/* ✅ Use the safe access function */}
                 </p>
               </div>
             </div>
           ))}
         </div>
 
-        {transactions?.data?.data?.length === 0 && (
+        {recentTransactions.length === 0 && (
           <p className="text-center text-muted-foreground py-8">
             No recent transactions
           </p>
