@@ -58,6 +58,17 @@ export const agentApi = baseApi.injectEndpoints({
       invalidatesTags: ["WALLET"],
     }),
 
+    cashout: builder.mutation<
+      IResponse<ITransaction>,
+      { phoneNumber: string; amount: number; note?: string }
+    >({
+      query: (payload) => ({
+        url: "/agent/cash-out", // Make sure this matches your backend route
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: ["WALLET"],
+    }),
     // withdraw
     withdraw: builder.mutation<
       IResponse<ITransaction>,
@@ -96,6 +107,7 @@ export const {
   useGetRecentTransactionsQuery,
   useGetTransactionsQuery,
   useCashinMutation,
+  useCashoutMutation,
   useWithdrawMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,

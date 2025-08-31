@@ -13,15 +13,15 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { useCashinMutation } from "@/redux/features/agent/agent.api";
+import { useCashoutMutation } from "@/redux/features/agent/agent.api";
 
 const formSchema = z.object({
   phoneNumber: z.string(),
   amount: z.number(),
 });
 
-export default function AgentCashIn() {
-  const [cashin, { isLoading }] = useCashinMutation();
+export default function AgentCashOut() {
+  const [cashout, { isLoading }] = useCashoutMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,18 +30,18 @@ export default function AgentCashIn() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await cashin(values).unwrap(); // unwrap gives you the actual response or throws
-      toast.success("cash in  successful!");
+      await cashout(values).unwrap(); // unwrap gives you the actual response or throws
+      toast.success("cash out successful!");
       form.reset();
     } catch (err: any) {
-      toast.error(err?.data?.message || "cash in  failed. Please try again.");
+      toast.error(err?.data?.message || "cash out failed. Please try again.");
     }
   }
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg rounded-2xl">
       <CardHeader>
-        <CardTitle>Cash in to Wallet</CardTitle>
+        <CardTitle>Cash out from Wallet</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -79,7 +79,7 @@ export default function AgentCashIn() {
               )}
             />
             <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? "Processing..." : "Cash In"}
+              {isLoading ? "Processing..." : "Cash out"}
             </Button>
           </form>
         </Form>

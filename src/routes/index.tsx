@@ -15,6 +15,7 @@ import UserWithdrawPage from "@/pages/User/UserWithdraw";
 import AgentDashboardLayout from "@/pages/Agent/AgentDashboardLayout";
 import AgentOverviewPage from "@/pages/Agent/AgentOverviewPage";
 import AgentCashIn from "@/pages/Agent/AgentCashIn";
+import AgentCashOut from "@/pages/Agent/AgentCashOut";
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +46,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: AgentOverviewPage },
       { path: "cashin", Component: AgentCashIn },
-      // { path: "deposit", Component: UserDepositPage },
+      { path: "cashout", Component: AgentCashOut },
       // { path: "withdraw", Component: UserWithdrawPage },
       // { path: "transactions", Component: UserTransactionTable },
       // { path: "profile", Component: UserProfilePage },
