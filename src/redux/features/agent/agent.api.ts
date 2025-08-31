@@ -1,6 +1,12 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse } from "@/types";
-import type { IWallet, ITransaction, IUserProfile } from "./agent.types";
+import type {
+  IWallet,
+  ITransaction,
+  IUserProfile,
+  IAgentSummary,
+  IAgentActivity,
+} from "./agent.types";
 
 export const agentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -69,35 +75,22 @@ export const agentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["WALLET"],
     }),
-    // withdraw
-    withdraw: builder.mutation<
-      IResponse<ITransaction>,
-      { amount: number; method?: string }
-    >({
-      query: (payload) => ({
-        url: "/wallet/withdraw",
-        method: "POST",
-        data: payload,
-      }),
-      invalidatesTags: ["WALLET"],
+
+    getAgentSummary: builder.query<IResponse<IAgentSummary>, void>({
+      query: () => ({ url: "/agent/summary", method: "GET" }),
+      providesTags: ["AGENT_SUMMARY"],
     }),
 
-    // user profile
-    getProfile: builder.query<IResponse<IUserProfile>, void>({
-      query: () => ({ url: "/user/me", method: "GET" }),
-      providesTags: ["USER"],
-    }),
-
-    updateProfile: builder.mutation<
-      IResponse<IUserProfile>,
-      Partial<IUserProfile> & { password?: string }
+    getAgentActivity: builder.query<
+      IResponse<IAgentActivity[]>,
+      { limit?: number }
     >({
-      query: (payload) => ({
-        url: "/user/update",
-        method: "PATCH",
-        data: payload,
+      query: ({ limit = 10 } = {}) => ({
+        url: "/agent/activity",
+        method: "GET",
+        params: { limit },
       }),
-      invalidatesTags: ["USER"],
+      providesTags: ["AGENT_ACTIVITY"],
     }),
   }),
 });
@@ -108,7 +101,6 @@ export const {
   useGetTransactionsQuery,
   useCashinMutation,
   useCashoutMutation,
-  useWithdrawMutation,
-  useGetProfileQuery,
-  useUpdateProfileMutation,
+  useGetAgentSummaryQuery,
+  useGetAgentActivityQuery,
 } = agentApi;

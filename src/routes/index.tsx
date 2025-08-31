@@ -47,7 +47,6 @@ export const router = createBrowserRouter([
       { index: true, Component: AgentOverviewPage },
       { path: "cashin", Component: AgentCashIn },
       { path: "cashout", Component: AgentCashOut },
-      // { path: "withdraw", Component: UserWithdrawPage },
       // { path: "transactions", Component: UserTransactionTable },
       // { path: "profile", Component: UserProfilePage },
     ],

@@ -32,3 +32,22 @@ export interface IUserProfile {
   email?: string;
   role: TRole;
 }
+// agent.types.ts
+export interface IAgentSummary {
+  totalCashIn: number;
+  totalCashOut: number;
+  totalTransactions: number;
+  totalCommission: number;
+  todayCashIn: number;
+  todayCashOut: number;
+  todayTransactions: number;
+}
+
+export interface IAgentActivity {
+  _id: string;
+  type: "CASH_IN" | "CASH_OUT";
+  amount: number;
+  userPhone: string;
+  timestamp: Date;
+  status: "SUCCESS" | "PENDING" | "FAILED";
+}
