@@ -6,7 +6,7 @@ export interface IRegisterUser {
   email?: string;
   password: string;
   phone: string;
-  role?: "USER" | "AGENT";
+  role: "USER" | "AGENT";
   address?: string;
 }
 
