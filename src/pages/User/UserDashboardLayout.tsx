@@ -12,7 +12,7 @@ export default function UserDashboardLayout() {
       <header className="border-b bg-white dark:bg-slate-800">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <Link to="/" className="font-bold">
-            <span className="text-xl">Wallet</span>
+            <span className="text-xl">User Wallet</span>
           </Link>
           <div className="flex items-center gap-4">
             <ModeToggle />

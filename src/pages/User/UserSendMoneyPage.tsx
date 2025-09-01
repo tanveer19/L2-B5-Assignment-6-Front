@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useSendMoneyMutation } from "@/redux/features/user/user.api";
+import { toast } from "sonner"; // Import toast library
 
 const formSchema = z.object({
   recipient: z.string().min(3, "Enter phone or email"),
@@ -28,11 +29,27 @@ export default function UserSendMoneyPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await sendMoney({
-      to: values.recipient,
-      amount: values.amount,
-    });
-    // form.reset();
+    try {
+      // ✅ Use .unwrap() to get the actual response or throw an error
+      const result = await sendMoney({
+        to: values.recipient,
+        amount: values.amount,
+      }).unwrap();
+
+      // ✅ Show success toast
+      toast.success(
+        `Successfully sent ৳${values.amount} to ${values.recipient}`
+      );
+
+      // ✅ Reset form after successful submission
+      form.reset();
+    } catch (error: any) {
+      // ✅ Show error toast
+      console.error("Send money error:", error);
+      toast.error(
+        error?.data?.message || "Failed to send money. Please try again."
+      );
+    }
   }
 
   return (
@@ -71,6 +88,8 @@ export default function UserSendMoneyPage() {
                       min={50}
                       placeholder="200"
                       {...field}
+                      value={field.value ?? ""}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />

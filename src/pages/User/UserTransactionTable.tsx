@@ -2,6 +2,17 @@ import { useGetTransactionsQuery } from "@/redux/features/user/user.api";
 import { ITransaction } from "@/redux/features/user/user.types";
 import { useEffect, useState } from "react";
 
+// Helper function to safely get phone number
+const getCounterpartyPhone = (tx: ITransaction) => {
+  if (tx.from && typeof tx.from === "object" && tx.from.phone) {
+    return tx.from.phone;
+  }
+  if (tx.to && typeof tx.to === "object" && tx.to.phone) {
+    return tx.to.phone;
+  }
+  return "-";
+};
+
 export default function UserTransactionTable({
   pageSize = 10,
 }: {
@@ -108,11 +119,7 @@ export default function UserTransactionTable({
                   <td>{tx.type}</td>
                   <td className="font-medium">{tx.amount}</td>
                   <td>
-                    {typeof tx.from === "object"
-                      ? tx.from.phone
-                      : typeof tx.to === "object"
-                      ? tx.to.phone
-                      : "-"}
+                    {getCounterpartyPhone(tx)} {/* ✅ Use safe function */}
                   </td>
 
                   <td>{tx.status}</td>

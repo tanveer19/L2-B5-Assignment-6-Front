@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWithdrawMutation } from "@/redux/features/user/user.api";
+import { toast } from "sonner"; // Import toast
 
 const formSchema = z.object({
   cardNumber: z.string().min(16, "Card number must be 16 digits"),
@@ -28,8 +29,24 @@ export default function UserWithdrawPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await withdraw(values);
-    form.reset();
+    try {
+      // ✅ Use .unwrap() to get the actual response or throw an error
+      const result = await withdraw(values).unwrap();
+
+      // ✅ Show success toast
+      toast.success(
+        `Successfully withdrew ৳${values.amount} to card ${values.cardNumber}`
+      );
+
+      // ✅ Reset form after successful submission
+      form.reset();
+    } catch (error: any) {
+      // ✅ Show error toast
+      console.error("Withdraw error:", error);
+      toast.error(
+        error?.data?.message || "Failed to withdraw money. Please try again."
+      );
+    }
   }
 
   return (
@@ -60,7 +77,13 @@ export default function UserWithdrawPage() {
                 <FormItem>
                   <FormLabel>Amount (৳)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="500" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="500"
+                      {...field}
+                      value={field.value ?? ""}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

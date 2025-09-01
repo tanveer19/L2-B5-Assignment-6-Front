@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,26 +8,52 @@ import {
   useUpdateProfileMutation,
 } from "@/redux/features/user/user.api";
 
+// ✅ Add interface for form values
+interface ProfileFormValues {
+  name: string;
+  phone: string;
+  password?: string;
+}
+
 export default function UserProfilePage() {
   const { data } = useGetProfileQuery();
   const profile = data?.data;
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
-  const { register, handleSubmit, reset } = useForm({
+  // ✅ Use the interface and include password in default values
+  const { register, handleSubmit, reset } = useForm<ProfileFormValues>({
     defaultValues: {
       name: profile?.name ?? "",
       phone: profile?.phone ?? "",
+      password: "", // ✅ Add password field
     },
   });
 
   React.useEffect(() => {
-    reset({ name: profile?.name ?? "", phone: profile?.phone ?? "" });
+    reset({
+      name: profile?.name ?? "",
+      phone: profile?.phone ?? "",
+      password: "", // ✅ Reset password field too
+    });
   }, [profile, reset]);
 
-  const onSubmit = async (vals: any) => {
+  const onSubmit = async (vals: ProfileFormValues) => {
     try {
-      const res = await updateProfile(vals).unwrap();
-      toast.success("Profile updated");
+      // ✅ Only send fields that have values (don't send empty password)
+      const updateData: Partial<ProfileFormValues> = {
+        name: vals.name,
+        phone: vals.phone,
+      };
+
+      if (vals.password) {
+        updateData.password = vals.password;
+      }
+
+      const res = await updateProfile(updateData).unwrap();
+      toast.success("Profile updated successfully");
+
+      // ✅ Clear password field after successful update
+      reset({ ...vals, password: "" });
     } catch (err: any) {
       toast.error(err?.data?.message || "Update failed");
     }
@@ -47,12 +72,14 @@ export default function UserProfilePage() {
           <Input {...register("phone")} />
         </div>
         <div>
-          <label className="block text-sm font-medium">New password</label>
+          <label className="block text-sm font-medium">
+            New password (leave empty to keep current)
+          </label>
           <Input {...register("password")} type="password" />
         </div>
         <div>
           <Button type="submit" disabled={isLoading}>
-            Save changes
+            {isLoading ? "Saving..." : "Save changes"}
           </Button>
         </div>
       </form>
