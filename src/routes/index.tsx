@@ -17,6 +17,7 @@ import AgentOverviewPage from "@/pages/Agent/AgentOverviewPage";
 import AgentCashIn from "@/pages/Agent/AgentCashIn";
 import AgentCashOut from "@/pages/Agent/AgentCashOut";
 import AgentTransactionTable from "@/pages/Agent/AgentTransactionTable";
+import AdminDashboardPage from "@/pages/Admin/AdminDashboardPage";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,17 @@ export const router = createBrowserRouter([
       { path: "transactions", Component: AgentTransactionTable },
       { path: "profile", Component: UserProfilePage },
     ],
+  },
+  {
+    path: "/admin",
+    Component: AdminDashboardPage,
+    // children: [
+    //   { index: true, Component: AgentOverviewPage },
+    //   { path: "cashin", Component: AgentCashIn },
+    //   { path: "cashout", Component: AgentCashOut },
+    //   { path: "transactions", Component: AgentTransactionTable },
+    //   { path: "profile", Component: UserProfilePage },
+    // ],
   },
   {
     Component: Login,

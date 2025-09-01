@@ -12,6 +12,8 @@ export const baseApi = createApi({
     "AGENT_TRANSACTIONS",
     "AGENT_ACTIVITY",
     "TRANSACTION",
+    "ADMIN_SUMMARY",
+    "ADMIN_ACTIVITY",
   ],
   endpoints: () => ({}),
 });

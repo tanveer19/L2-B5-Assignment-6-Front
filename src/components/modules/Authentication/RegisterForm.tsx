@@ -70,9 +70,7 @@ export function RegisterForm({
       navigate("/login"); // or /verify if you have verification
     } catch (error: any) {
       console.error(error);
-      toast.error(
-        error?.data?.message || "Registration failed. Check your input."
-      );
+      console.error("Register error:", error);
     }
   };
 
