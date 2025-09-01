@@ -2,7 +2,7 @@ import { ModeToggle } from "@/components/layout/ModeToggler";
 import { useGetProfileQuery } from "@/redux/features/user/user.api";
 import { Link, Outlet } from "react-router";
 
-export default function AgentDashboardLayout() {
+export default function AdminDashboardLayout() {
   const { data: profileRes, isLoading } = useGetProfileQuery();
 
   const profile = profileRes?.data;
@@ -12,7 +12,7 @@ export default function AgentDashboardLayout() {
       <header className="border-b bg-white dark:bg-slate-800">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <Link to="/" className="font-bold">
-            <span className="text-xl">Agent Dashboard</span>
+            <span className="text-xl">Admin Dashboard</span>
           </Link>
           <div className="flex items-center gap-4">
             <ModeToggle />
@@ -35,32 +35,43 @@ export default function AgentDashboardLayout() {
           <aside className="md:col-span-1 bg-white p-4 rounded-lg shadow-sm">
             <nav className="flex flex-col gap-2">
               <Link
-                to="/agent"
+                to="/admin"
                 className="text-sm py-2 px-3 rounded hover:bg-gray-50"
               >
                 Overview
               </Link>
               <Link
-                to="/agent/cashin"
+                to="/admin/users"
                 className="text-sm py-2 px-3 rounded hover:bg-gray-50"
               >
-                Cash In
+                Manage Users
               </Link>
               <Link
-                to="/agent/cashout"
+                to="/admin/agents"
                 className="text-sm py-2 px-3 rounded hover:bg-gray-50"
               >
-                Cash Out
+                Manage Agents
               </Link>
-
               <Link
-                to="/agent/transactions"
+                to="/admin/transactions"
                 className="text-sm py-2 px-3 rounded hover:bg-gray-50"
               >
-                Transactions
+                All Transactions
               </Link>
               <Link
-                to="/agent/profile"
+                to="/admin/reports"
+                className="text-sm py-2 px-3 rounded hover:bg-gray-50"
+              >
+                Reports
+              </Link>
+              <Link
+                to="/admin/settings"
+                className="text-sm py-2 px-3 rounded hover:bg-gray-50"
+              >
+                System Settings
+              </Link>
+              <Link
+                to="/admin/profile"
                 className="text-sm py-2 px-3 rounded hover:bg-gray-50"
               >
                 Profile

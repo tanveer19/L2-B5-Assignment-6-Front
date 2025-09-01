@@ -18,6 +18,8 @@ import AgentCashIn from "@/pages/Agent/AgentCashIn";
 import AgentCashOut from "@/pages/Agent/AgentCashOut";
 import AgentTransactionTable from "@/pages/Agent/AgentTransactionTable";
 import AdminDashboardPage from "@/pages/Admin/AdminDashboardPage";
+import AdminDashboardLayout from "@/pages/Admin/AdminDashboardLayout";
+import AdminOverviewPage from "@/pages/Admin/AdminOverviewPage";
 
 export const router = createBrowserRouter([
   {
@@ -55,14 +57,14 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    Component: AdminDashboardPage,
-    // children: [
-    //   { index: true, Component: AgentOverviewPage },
-    //   { path: "cashin", Component: AgentCashIn },
-    //   { path: "cashout", Component: AgentCashOut },
-    //   { path: "transactions", Component: AgentTransactionTable },
-    //   { path: "profile", Component: UserProfilePage },
-    // ],
+    Component: AdminDashboardLayout,
+    children: [
+      { index: true, Component: AdminOverviewPage },
+      //   { path: "cashin", Component: AgentCashIn },
+      //   { path: "cashout", Component: AgentCashOut },
+      //   { path: "transactions", Component: AgentTransactionTable },
+      //   { path: "profile", Component: UserProfilePage },
+    ],
   },
   {
     Component: Login,
