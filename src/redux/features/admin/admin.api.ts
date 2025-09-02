@@ -41,7 +41,6 @@ export const adminApi = baseApi.injectEndpoints({
       providesTags: ["ADMIN_ACTIVITY"],
     }),
 
-    // Add other admin endpoints as needed
     // Get all users
     getAllUsers: builder.query<IResponse<IUser[]>, void>({
       query: () => ({ url: "/admin/users", method: "GET" }),
@@ -66,7 +65,6 @@ export const adminApi = baseApi.injectEndpoints({
 export const {
   useGetAdminSummaryQuery,
   useGetAdminActivityQuery,
-
   useGetAllUsersQuery, // Add this
   useUpdateUserStatusMutation, // Add this
 } = adminApi;

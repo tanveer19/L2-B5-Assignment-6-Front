@@ -218,7 +218,7 @@ export const userApi = baseApi.injectEndpoints({
 
     // Admin: Get all users
     getAllUsers: builder.query<IResponse<IUserProfile[]>, void>({
-      query: () => ({ url: "/user", method: "GET" }),
+      query: () => ({ url: "/user/all-users", method: "GET" }),
       providesTags: ["USER"],
     }),
 
