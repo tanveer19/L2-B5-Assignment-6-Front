@@ -1,6 +1,5 @@
-// src/redux/features/admin/admin.api.ts
 import { baseApi } from "@/redux/baseApi";
-import type { IResponse } from "@/types";
+import type { IResponse, IUser } from "@/types";
 
 export interface IAdminSummary {
   totalUsers: number;
@@ -43,8 +42,31 @@ export const adminApi = baseApi.injectEndpoints({
     }),
 
     // Add other admin endpoints as needed
+    // Get all users
+    getAllUsers: builder.query<IResponse<IUser[]>, void>({
+      query: () => ({ url: "/admin/users", method: "GET" }),
+      providesTags: ["USERS"],
+    }),
+    // Update user status (block/unblock)
+    updateUserStatus: builder.mutation<
+      IResponse<IUser>,
+      { userId: string; isActive: boolean }
+    >({
+      query: ({ userId, ...payload }) => ({
+        url: `/admin/users/${userId}/status`,
+        method: "PATCH",
+        data: payload,
+      }),
+      invalidatesTags: ["USERS"],
+    }),
   }),
 });
 
 // ✅ CRITICAL: Export the hooks
-export const { useGetAdminSummaryQuery, useGetAdminActivityQuery } = adminApi;
+export const {
+  useGetAdminSummaryQuery,
+  useGetAdminActivityQuery,
+
+  useGetAllUsersQuery, // Add this
+  useUpdateUserStatusMutation, // Add this
+} = adminApi;

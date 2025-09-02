@@ -22,7 +22,10 @@ export interface IUser {
   phone: string;
   email?: string;
   role: TRole;
-  // add other fields you expect in user object
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  wallet?: any;
 }
 
 export type TRole = "AGENT" | "ADMIN" | "USER";

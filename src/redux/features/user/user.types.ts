@@ -27,4 +27,7 @@ export interface IUserProfile {
   phone: string;
   email?: string;
   role: TRole;
+  isActive?: string;
+  createdAt?: string;
+  wallet?: IWallet;
 }

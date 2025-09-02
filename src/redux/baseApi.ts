@@ -6,6 +6,7 @@ export const baseApi = createApi({
   baseQuery: axiosBaseQuery(),
   tagTypes: [
     "USER",
+    "USERS",
     "WALLET",
     "AGENT",
     "AGENT_SUMMARY",
