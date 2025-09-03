@@ -52,30 +52,19 @@ export default function AdminDashboardLayout() {
               >
                 Manage Agents
               </Link>
-              <Link
+              {/* <Link
                 to="/admin/transactions"
                 className="text-sm py-2 px-3 rounded hover:bg-gray-50"
               >
                 All Transactions
               </Link>
-              <Link
-                to="/admin/reports"
-                className="text-sm py-2 px-3 rounded hover:bg-gray-50"
-              >
-                Reports
-              </Link>
-              <Link
-                to="/admin/settings"
-                className="text-sm py-2 px-3 rounded hover:bg-gray-50"
-              >
-                System Settings
-              </Link>
+
               <Link
                 to="/admin/profile"
                 className="text-sm py-2 px-3 rounded hover:bg-gray-50"
               >
                 Profile
-              </Link>
+              </Link> */}
             </nav>
           </aside>
 

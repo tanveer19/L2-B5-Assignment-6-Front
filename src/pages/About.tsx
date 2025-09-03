@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <div className="container mx-auto">
+    <div className="">
       <h1>About</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque culpa

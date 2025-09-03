@@ -21,6 +21,8 @@ import AdminDashboardLayout from "@/pages/Admin/AdminDashboardLayout";
 import AdminOverviewPage from "@/pages/Admin/AdminOverviewPage";
 import ManageUsers from "@/pages/Admin/ManageUsers";
 import ManageAgents from "@/pages/Admin/ManageAgents";
+import Features from "@/pages/Features";
+import Home from "@/pages/Home";
 
 export const router = createBrowserRouter([
   {
@@ -28,8 +30,16 @@ export const router = createBrowserRouter([
     path: "/",
     children: [
       {
-        Component: withAuth(About),
+        Component: Home,
+        path: "/",
+      },
+      {
+        Component: About,
         path: "about",
+      },
+      {
+        Component: Features,
+        path: "features",
       },
     ],
   },
