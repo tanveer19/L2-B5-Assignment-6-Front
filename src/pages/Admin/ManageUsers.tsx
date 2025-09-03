@@ -1,18 +1,26 @@
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useGetAllUsersQuery } from "@/redux/features/admin/admin.api";
-import { useUpdateUserStatusMutation } from "@/redux/features/user/user.api";
-import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import {
+  useGetAllUsersQuery,
+  useUpdateUserStatusMutation,
+} from "@/redux/features/admin/admin.api";
+
+type Status = "ACTIVE" | "BLOCKED";
 
 export default function ManageUsers() {
   const { data, isLoading, isError } = useGetAllUsersQuery(undefined);
   const [updateUserStatus] = useUpdateUserStatusMutation();
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [usersList, setUsersList] = useState<any[]>([]);
 
-  const users = data?.data?.filter(
-    (u: any) => u.role === "user" || u.role === "USER"
-  );
+  useEffect(() => {
+    const list =
+      data?.data?.filter((u: any) => u.role === "user" || u.role === "USER") ??
+      [];
+    setUsersList(list);
+  }, [data]);
 
   if (isLoading) return <p className="text-center p-4">Loading users...</p>;
   if (isError)
@@ -20,13 +28,29 @@ export default function ManageUsers() {
 
   const handleToggleStatus = async (user: any) => {
     setLoadingId(user._id);
+
+    const previousStatus = user.isActive as Status;
+    const newStatus = (
+      previousStatus === "ACTIVE" ? "BLOCKED" : "ACTIVE"
+    ) as Status;
+
+    const payload: { userId: string; isActive: boolean } = {
+      userId: String(user._id), // Change 'id' to 'userId'
+      isActive: newStatus === "ACTIVE", // Convert to boolean if needed
+    };
+    // optimistic UI update
+    setUsersList((prev) =>
+      prev.map((u) => (u._id === user._id ? { ...u, isActive: newStatus } : u))
+    );
+
     try {
-      await updateUserStatus({
-        id: user._id,
-        isActive: user.isActive === "ACTIVE" ? "BLOCKED" : "ACTIVE",
-      }).unwrap();
+      console.log("sending payload", payload);
+      const res = await updateUserStatus(payload).unwrap();
+      console.log("mutation response", res);
+
+      // ... rest of your code
     } catch (error) {
-      console.error("Error updating user:", error);
+      // ... error handling
     } finally {
       setLoadingId(null);
     }
@@ -36,7 +60,7 @@ export default function ManageUsers() {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Manage Users</h1>
       <div className="grid gap-4">
-        {users?.map((user: any) => (
+        {usersList.map((user: any) => (
           <Card key={user._id} className="rounded-2xl shadow-md">
             <CardContent className="flex items-center justify-between p-4">
               <div>
@@ -53,6 +77,7 @@ export default function ManageUsers() {
                   Status: {user.isActive}
                 </p>
               </div>
+
               <Button
                 variant={user.isActive === "ACTIVE" ? "destructive" : "default"}
                 onClick={() => handleToggleStatus(user)}
