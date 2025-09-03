@@ -17,10 +17,10 @@ import AgentOverviewPage from "@/pages/Agent/AgentOverviewPage";
 import AgentCashIn from "@/pages/Agent/AgentCashIn";
 import AgentCashOut from "@/pages/Agent/AgentCashOut";
 import AgentTransactionTable from "@/pages/Agent/AgentTransactionTable";
-import AdminDashboardPage from "@/pages/Admin/AdminDashboardPage";
 import AdminDashboardLayout from "@/pages/Admin/AdminDashboardLayout";
 import AdminOverviewPage from "@/pages/Admin/AdminOverviewPage";
 import ManageUsers from "@/pages/Admin/ManageUsers";
+import ManageAgents from "@/pages/Admin/ManageAgents";
 
 export const router = createBrowserRouter([
   {
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: AdminOverviewPage },
       { path: "users", Component: ManageUsers },
-      //   { path: "cashout", Component: AgentCashOut },
+      { path: "agents", Component: ManageAgents },
       //   { path: "transactions", Component: AgentTransactionTable },
       //   { path: "profile", Component: UserProfilePage },
     ],

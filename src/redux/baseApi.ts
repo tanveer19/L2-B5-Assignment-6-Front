@@ -9,6 +9,7 @@ export const baseApi = createApi({
     "USERS",
     "WALLET",
     "AGENT",
+    "AGENTS",
     "AGENT_SUMMARY",
     "AGENT_TRANSACTIONS",
     "AGENT_ACTIVITY",

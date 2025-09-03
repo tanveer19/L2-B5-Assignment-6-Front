@@ -58,13 +58,32 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USERS"],
     }),
+
+    // Get all agents
+    getAllAgents: builder.query<IResponse<IUser[]>, void>({
+      query: () => ({ url: "/admin/agents", method: "GET" }),
+      providesTags: ["AGENTS"],
+    }),
+    // Update agent status (block/unblock)
+    updateAgentStatus: builder.mutation<
+      IResponse<IUser>,
+      { userId: string; isActive: boolean }
+    >({
+      query: ({ userId, ...payload }) => ({
+        url: `/admin/agents/${userId}/status`,
+        method: "PATCH",
+        data: payload,
+      }),
+      invalidatesTags: ["AGENTS"],
+    }),
   }),
 });
 
-// ✅ CRITICAL: Export the hooks
 export const {
   useGetAdminSummaryQuery,
   useGetAdminActivityQuery,
-  useGetAllUsersQuery, // Add this
-  useUpdateUserStatusMutation, // Add this
+  useGetAllUsersQuery,
+  useUpdateUserStatusMutation,
+  useGetAllAgentsQuery,
+  useUpdateAgentStatusMutation,
 } = adminApi;
