@@ -3,7 +3,6 @@ import About from "@/pages/About";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import { createBrowserRouter } from "react-router";
-import { withAuth } from "@/utils/withAuth";
 import Unauthorized from "@/pages/Unauthorized";
 import UserDashboardLayout from "@/pages/User/UserDashboardLayout";
 import UserOverviewPage from "@/pages/User/UserOverviewPage";
@@ -23,6 +22,8 @@ import ManageUsers from "@/pages/Admin/ManageUsers";
 import ManageAgents from "@/pages/Admin/ManageAgents";
 import Features from "@/pages/Features";
 import Home from "@/pages/Home";
+import Contact from "@/pages/Contact";
+import Faq from "@/pages/Faq";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ export const router = createBrowserRouter([
       {
         Component: Features,
         path: "features",
+      },
+      {
+        Component: Contact,
+        path: "contact",
+      },
+      {
+        Component: Faq,
+        path: "faq",
       },
     ],
   },
