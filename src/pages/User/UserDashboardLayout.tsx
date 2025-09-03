@@ -1,11 +1,26 @@
 import { ModeToggle } from "@/components/layout/ModeToggler";
+import { Button } from "@/components/ui/button";
+import {
+  authApi,
+  useLogoutMutation,
+  useUserInfoQuery,
+} from "@/redux/features/auth/auth.api";
 import { useGetProfileQuery } from "@/redux/features/user/user.api";
+import { useAppDispatch } from "@/redux/hook";
 import { Link, Outlet } from "react-router";
 
 export default function UserDashboardLayout() {
-  const { data: profileRes, isLoading } = useGetProfileQuery();
+  // const { data: profileRes, isLoading } = useGetProfileQuery();
+  // const profile = profileRes?.data;
+  const { data: userInfo, isLoading } = useUserInfoQuery();
 
-  const profile = profileRes?.data;
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    await logout(undefined);
+    dispatch(authApi.util.resetApiState());
+  };
 
   return (
     <div className="min-h-screen bg-surface-50 dark:bg-surface-900">
@@ -14,17 +29,45 @@ export default function UserDashboardLayout() {
           <Link to="/" className="font-bold">
             <span className="text-xl">User Wallet</span>
           </Link>
+
           <div className="flex items-center gap-4">
             <ModeToggle />
+
             {isLoading ? (
-              <div className="w-8 h-8 bg-gray-200 rounded animate-pulse" />
-            ) : (
-              <div className="text-sm">
-                <div className="font-medium">{profile?.name}</div>
-                <div className="text-muted-foreground text-xs">
-                  {profile?.phone}
+              // Loading state
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
+                <div className="hidden sm:block">
+                  <div className="h-4 w-20 bg-gray-200 rounded animate-pulse mb-1"></div>
+                  <div className="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
                 </div>
               </div>
+            ) : userInfo?.data ? (
+              // User is logged in - show info and logout button
+              <div className="flex items-center gap-3">
+                <div className="hidden sm:block text-right">
+                  <div className="font-medium text-sm">
+                    {userInfo.data.name}
+                  </div>
+                  <div className="text-muted-foreground text-xs">
+                    {userInfo.data.phone}
+                  </div>
+                </div>
+
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  size="sm"
+                  className="text-sm"
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              // User is not logged in - show login button
+              <Button asChild size="sm" className="text-sm">
+                <Link to="/login">Login</Link>
+              </Button>
             )}
           </div>
         </div>
