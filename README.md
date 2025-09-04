@@ -80,10 +80,7 @@ Tools & Others
 
 ☁️ Deployment: Vercel (frontend), Render/Heroku (backend)
 
-🌍 Live URL
-
-🔗 Live Demo
-(replace when deployed)
+🌍 Live URL https://l2-b5-assignment-6-front.vercel.app/
 
 📌 Relevant Notes
 

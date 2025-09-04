@@ -33,8 +33,6 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
-    // auth.api.ts
-    // auth.api.ts
     userInfo: builder.query<
       IResponse<{ role: TRole; phone: string; name: string }>,
       void

@@ -19,15 +19,8 @@ import {
   useUserInfoQuery,
 } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
-// import { TRole } from "@/types";
 import { role } from "@/types/role";
 
-// interface IUser {
-//   _id: string;
-//   name: string;
-//   role: TRole;
-// }
-// Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
@@ -40,8 +33,13 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
-  const { data: userInfo, isLoading } = useUserInfoQuery();
+  // Check if accessToken exists in cookies
+  const isLoggedIn = Boolean(document.cookie.includes("accessToken"));
 
+  // Skip the query if not logged in
+  const { data: userInfo, isLoading } = useUserInfoQuery(undefined, {
+    skip: !isLoggedIn,
+  });
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
 
