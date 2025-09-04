@@ -3,7 +3,6 @@ import type { IResponse } from "@/types";
 import type {
   IWallet,
   ITransaction,
-  IUserProfile,
   IAgentSummary,
   IAgentActivity,
 } from "./agent.types";

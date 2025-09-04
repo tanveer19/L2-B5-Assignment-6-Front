@@ -31,7 +31,7 @@ export default function UserWithdrawPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // ✅ Use .unwrap() to get the actual response or throw an error
-      const result = await withdraw(values).unwrap();
+      await withdraw(values).unwrap();
 
       // ✅ Show success toast
       toast.success(

@@ -53,7 +53,7 @@ export default function AgentCashOut() {
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="01600312882" {...field} />
+                    <Input placeholder="01600000000" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

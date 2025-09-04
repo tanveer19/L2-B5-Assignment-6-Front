@@ -9,7 +9,6 @@ import {
   Calendar,
   MapPin,
   Mail,
-  Phone,
   Linkedin,
   Twitter,
 } from "lucide-react";

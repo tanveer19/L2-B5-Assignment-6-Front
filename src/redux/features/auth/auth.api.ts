@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IResponse, IUser, TRole } from "@/types";
+import type { IResponse, TRole } from "@/types";
 
 export interface IRegisterUser {
   name: string;

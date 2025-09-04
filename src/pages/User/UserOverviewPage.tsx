@@ -8,11 +8,9 @@ import { Loader2 } from "lucide-react";
 
 export default function UserOverviewPage() {
   const { data: walletRes, isLoading: walletLoading } = useGetWalletQuery();
-  const { data: recentTxRes, isLoading: txLoading } =
-    useGetRecentTransactionsQuery({ limit: 5 });
+  const {} = useGetRecentTransactionsQuery({ limit: 5 });
 
   const wallet = walletRes?.data;
-  const recent = recentTxRes?.data ?? [];
 
   return (
     <div className="space-y-6">

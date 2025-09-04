@@ -6,7 +6,6 @@ import {
   BarChart3,
   Globe,
   Users,
-  Phone,
   CreditCard,
   Zap,
   Lock,

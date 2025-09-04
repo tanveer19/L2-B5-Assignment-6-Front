@@ -15,8 +15,8 @@ import {
 } from "@/redux/features/auth/auth.api";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hook";
-import { TRole } from "@/types";
-import type { FieldValues, SubmitHandler } from "react-hook-form";
+// import { TRole } from "@/types";
+import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -26,11 +26,11 @@ type LoginFormValues = {
   password: string;
 };
 
-type IUserInfo = {
-  role: TRole;
-  phone: string;
-  name: string;
-};
+// type IUserInfo = {
+//   role: TRole;
+//   phone: string;
+//   name: string;
+// };
 export function LoginForm({
   className,
   ...props
@@ -41,7 +41,7 @@ export function LoginForm({
 
   const [login] = useLoginMutation();
 
-  const { data, refetch, isLoading, isError } = useUserInfoQuery();
+  const { refetch } = useUserInfoQuery();
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
@@ -52,7 +52,6 @@ export function LoginForm({
 
         // refetch user info from server (cookie auth)
         const userRes = await refetch().unwrap();
-        const user: IUserInfo = userRes.data as IUserInfo;
         dispatch(setUser(res.data));
         // redirect based on role
         if (userRes?.data?.role === "ADMIN") {

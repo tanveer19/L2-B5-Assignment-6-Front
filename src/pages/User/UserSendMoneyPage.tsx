@@ -31,7 +31,7 @@ export default function UserSendMoneyPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // ✅ Use .unwrap() to get the actual response or throw an error
-      const result = await sendMoney({
+      await sendMoney({
         to: values.recipient,
         amount: values.amount,
       }).unwrap();
