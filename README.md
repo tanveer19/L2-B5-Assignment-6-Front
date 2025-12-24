@@ -1,4 +1,5 @@
-🚀 bKash Clone — Wallet & Transaction Management System
+Wallet & Transaction Management System
+
 📖 Project Overview
 
 This project is a bKash-like digital wallet application built with modern web technologies.
@@ -17,11 +18,11 @@ The goal is to simulate a real-world fintech wallet system where users can depos
 ⚙️ Setup Instructions
 1️⃣ Clone the repository
 git clone https://github.com/tanveer19/L2-B5-Assignment-6-Front.git
-cd bkash-clone
+cd L2-B5-Assignment-6-Front
 
 2️⃣ Install dependencies
 
-Using pnpm (preferred):
+Using pnpm :
 
 pnpm install
 
@@ -33,22 +34,10 @@ npm install
 
 Create a .env file in the root directory with:
 
-# Backend
-
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-PORT=5000
-
 4️⃣ Run the project
-
-Start backend & frontend together (if configured with workspaces):
 
 pnpm dev
 
-Or separately:
-
-cd backend && pnpm dev
-cd frontend && pnpm dev
 
 5️⃣ Build for production
 pnpm build
@@ -78,13 +67,11 @@ Tools & Others
 
 🔄 Prisma / Mongoose middleware for DB logic
 
-☁️ Deployment: Vercel (frontend), Render/Heroku (backend)
-
 🌍 Live URL https://l2-b5-assignment-6-front.vercel.app/
 
 📌 Relevant Notes
 
-Default user roles: USER, AGENT, ADMIN
+Default user roles: USER
 
 New users/agents get a wallet initialized with ৳50
 
