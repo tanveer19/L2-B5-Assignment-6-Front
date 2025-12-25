@@ -320,6 +320,7 @@
 
 import { Facebook, Twitter, Instagram, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 export default function Footer() {
   return (
@@ -344,36 +345,36 @@ export default function Footer() {
             </h3>
             <ul className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="hover:text-blue-600 dark:hover:text-blue-400"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/about"
+                <Link
+                  to="/about"
                   className="hover:text-blue-600 dark:hover:text-blue-400"
                 >
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/faq"
+                <Link
+                  to="/faq"
                   className="hover:text-blue-600 dark:hover:text-blue-400"
                 >
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/contact"
+                <Link
+                  to="/contact"
                   className="hover:text-blue-600 dark:hover:text-blue-400"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
