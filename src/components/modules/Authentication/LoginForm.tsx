@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import {
   useLoginMutation,
-  useUserInfoQuery,
+  useLazyUserInfoQuery,
 } from "@/redux/features/auth/auth.api";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hook";
@@ -41,7 +41,7 @@ export function LoginForm({
 
   const [login] = useLoginMutation();
 
-  const { refetch } = useUserInfoQuery();
+  const [triggerUserInfo] = useLazyUserInfoQuery();
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
@@ -50,8 +50,8 @@ export function LoginForm({
       if (res.success) {
         toast.success("Logged in successfully");
 
-        // refetch user info from server (cookie auth)
-        const userRes = await refetch().unwrap();
+        // fetch user info from server (cookie auth)
+        const userRes = await triggerUserInfo().unwrap();
         dispatch(setUser(res.data));
         // redirect based on role
         if (userRes?.data?.role === "ADMIN") {

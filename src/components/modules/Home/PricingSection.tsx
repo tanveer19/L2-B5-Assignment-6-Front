@@ -112,12 +112,12 @@ const PricingSection = ({
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
             {plans.map((plan) => (
               <Card
                 key={plan.id}
-                className={`border-0 shadow-md hover:shadow-lg transition-all duration-300 relative ${
-                  plan.popular ? "ring-2 ring-blue-600 scale-105" : ""
+                className={`border-0 shadow-md hover:shadow-lg transition-all duration-300 relative flex flex-col ${
+                  plan.popular ? "ring-2 ring-blue-600" : ""
                 }`}
               >
                 {plan.popular && (
@@ -135,8 +135,8 @@ const PricingSection = ({
                   </div>
                   <p className="text-gray-500 text-sm mt-2">{plan.description}</p>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <ul className="space-y-3">
+                <CardContent className="flex flex-col flex-1">
+                  <ul className="space-y-3 flex-1">
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-center gap-2">
                         <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
@@ -145,7 +145,7 @@ const PricingSection = ({
                     ))}
                   </ul>
                   <Button
-                    className={`w-full mt-4 ${
+                    className={`w-full mt-6 ${
                       plan.popular
                         ? "bg-blue-600 hover:bg-blue-700"
                         : "bg-gray-900 hover:bg-gray-800"
