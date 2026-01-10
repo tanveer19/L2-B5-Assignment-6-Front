@@ -72,29 +72,29 @@ const SecuritySection = ({
 
   const SkeletonCard = () => (
     <div className="flex items-start gap-4">
-      <div className="h-12 w-12 bg-gray-300 rounded-lg animate-pulse flex-shrink-0" />
+      <div className="h-12 w-12 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse flex-shrink-0" />
       <div className="space-y-2 flex-1">
-        <div className="h-5 w-32 bg-gray-300 rounded animate-pulse" />
-        <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
+        <div className="h-5 w-32 bg-gray-300 dark:bg-gray-600 rounded animate-pulse" />
+        <div className="h-4 w-full bg-gray-200 dark:bg-gray-500 rounded animate-pulse" />
       </div>
     </div>
   );
 
   return (
-    <section className="py-16 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+    <section className="py-16 bg-blue-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center h-16 w-16 bg-blue-600 rounded-full mb-4">
-            <Shield className="h-8 w-8" />
+            <Shield className="h-8 w-8 text-white" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">{subtitle}</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">{subtitle}</p>
         </div>
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className="bg-gray-800/50 border-gray-700">
+              <Card key={i} className="bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6">
                   <SkeletonCard />
                 </CardContent>
@@ -106,16 +106,16 @@ const SecuritySection = ({
             {features.map((feature) => (
               <Card
                 key={feature.id}
-                className="bg-gray-800/50 border-gray-700 hover:bg-gray-800 transition-all duration-300"
+                className="bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all duration-300"
               >
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-400 flex-shrink-0">
+                    <div className="h-12 w-12 bg-blue-100 dark:bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 flex-shrink-0">
                       {feature.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg mb-1">{feature.title}</h3>
-                      <p className="text-gray-400 text-sm">{feature.description}</p>
+                      <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-1">{feature.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">{feature.description}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -124,7 +124,7 @@ const SecuritySection = ({
           </div>
         )}
 
-        <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-gray-400 text-sm">
+        <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-gray-600 dark:text-gray-400 text-sm">
           <div className="flex items-center gap-2">
             <BadgeCheck className="h-5 w-5 text-green-500" />
             <span>PCI-DSS Certified</span>

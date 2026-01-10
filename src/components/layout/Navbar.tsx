@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b sticky top-0 bg-blue-200 z-50">
+    <header className="border-b sticky top-0 bg-blue-200 dark:bg-gray-900 z-50">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4 ">
         {/* Left side */}
         <div className="flex items-center gap-2">

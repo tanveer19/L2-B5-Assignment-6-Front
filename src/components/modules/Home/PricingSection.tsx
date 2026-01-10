@@ -82,27 +82,27 @@ const PricingSection = ({
   }, []);
 
   const SkeletonCard = () => (
-    <Card className="border-0 shadow-md">
+    <Card className="border-0 shadow-md dark:bg-gray-800">
       <CardHeader className="text-center pb-2">
-        <div className="h-6 w-24 bg-gray-300 rounded mx-auto mb-2 animate-pulse" />
-        <div className="h-10 w-20 bg-gray-300 rounded mx-auto animate-pulse" />
+        <div className="h-6 w-24 bg-gray-300 dark:bg-gray-600 rounded mx-auto mb-2 animate-pulse" />
+        <div className="h-10 w-20 bg-gray-300 dark:bg-gray-600 rounded mx-auto animate-pulse" />
       </CardHeader>
       <CardContent className="space-y-4">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-4 w-full bg-gray-200 rounded animate-pulse" />
+          <div key={i} className="h-4 w-full bg-gray-200 dark:bg-gray-500 rounded animate-pulse" />
         ))}
       </CardContent>
     </Card>
   );
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white dark:bg-gray-800">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             {title}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">{subtitle}</p>
         </div>
 
         {isLoading ? (
@@ -116,8 +116,8 @@ const PricingSection = ({
             {plans.map((plan) => (
               <Card
                 key={plan.id}
-                className={`border-0 shadow-md hover:shadow-lg transition-all duration-300 relative flex flex-col ${
-                  plan.popular ? "ring-2 ring-blue-600" : ""
+                className={`border-0 shadow-md hover:shadow-lg transition-all duration-300 relative flex flex-col dark:bg-gray-700 ${
+                  plan.popular ? "ring-2 ring-blue-600 dark:ring-blue-400" : ""
                 }`}
               >
                 {plan.popular && (
@@ -126,21 +126,21 @@ const PricingSection = ({
                   </div>
                 )}
                 <CardHeader className="text-center pb-2">
-                  <CardTitle className="text-xl">{plan.name}</CardTitle>
+                  <CardTitle className="text-xl dark:text-white">{plan.name}</CardTitle>
                   <div className="mt-4">
-                    <span className="text-4xl font-bold text-gray-900">
+                    <span className="text-4xl font-bold text-gray-900 dark:text-white">
                       {plan.price}
                     </span>
-                    <span className="text-gray-500">{plan.period}</span>
+                    <span className="text-gray-500 dark:text-gray-400">{plan.period}</span>
                   </div>
-                  <p className="text-gray-500 text-sm mt-2">{plan.description}</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">{plan.description}</p>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-1">
                   <ul className="space-y-3 flex-1">
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-center gap-2">
                         <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-600 text-sm">{feature}</span>
+                        <span className="text-gray-600 dark:text-gray-300 text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -148,7 +148,7 @@ const PricingSection = ({
                     className={`w-full mt-6 ${
                       plan.popular
                         ? "bg-blue-600 hover:bg-blue-700"
-                        : "bg-gray-900 hover:bg-gray-800"
+                        : "bg-gray-900 hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500"
                     }`}
                   >
                     Get Started
