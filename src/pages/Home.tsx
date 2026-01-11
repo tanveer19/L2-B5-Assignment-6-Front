@@ -90,8 +90,9 @@ const Home = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="md:w-1/2 space-y-8">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
-                Send, Pay & <span className="text-blue-600 dark:text-blue-400">Manage</span> Money
-                Simply
+                Send, Pay &{" "}
+                <span className="text-blue-600 dark:text-blue-400">Manage</span>{" "}
+                Money Simply
               </h1>
 
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-lg">
@@ -142,7 +143,9 @@ const Home = () => {
 
                 <div className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-6 w-80 border-8 border-gray-900 dark:border-gray-700 transform rotate-3">
                   <div className="flex justify-between items-center mb-6">
-                    <h3 className="font-bold text-lg text-gray-900 dark:text-white">bKash App</h3>
+                    <h3 className="font-bold text-lg text-gray-900 dark:text-white">
+                      bKash App
+                    </h3>
                     <div className="h-2 w-12 bg-gray-300 dark:bg-gray-600 rounded"></div>
                   </div>
 
@@ -152,7 +155,9 @@ const Home = () => {
                         <div className="h-10 w-10 bg-blue-500 rounded-full flex items-center justify-center">
                           <Send className="h-5 w-5 text-white" />
                         </div>
-                        <span className="font-medium text-gray-900 dark:text-white">Send Money</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          Send Money
+                        </span>
                       </div>
                     </div>
 
@@ -161,7 +166,9 @@ const Home = () => {
                         <div className="h-10 w-10 bg-gray-500 rounded-full flex items-center justify-center">
                           <Wallet className="h-5 w-5 text-white" />
                         </div>
-                        <span className="font-medium text-gray-900 dark:text-white">Cash Out</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          Cash Out
+                        </span>
                       </div>
                     </div>
 
@@ -170,7 +177,9 @@ const Home = () => {
                         <div className="h-10 w-10 bg-gray-500 rounded-full flex items-center justify-center">
                           <Phone className="h-5 w-5 text-white" />
                         </div>
-                        <span className="font-medium text-gray-900 dark:text-white">Mobile Recharge</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          Mobile Recharge
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -225,7 +234,9 @@ const Home = () => {
                 <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
                   {stats.volume}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">Transaction Volume</p>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Transaction Volume
+                </p>
               </div>
 
               <div className="text-center">
@@ -256,10 +267,7 @@ const Home = () => {
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card
-                  key={i}
-                  className="border-0 shadow-md dark:bg-gray-800"
-                >
+                <Card key={i} className="border-0 shadow-md dark:bg-gray-800">
                   <CardContent className="p-6">
                     <div className="h-10 w-10 bg-gray-300 dark:bg-gray-600 rounded-lg mb-4 animate-pulse"></div>
                     <div className="h-6 w-32 bg-gray-300 dark:bg-gray-600 rounded mb-3 animate-pulse"></div>
@@ -277,11 +285,15 @@ const Home = () => {
                   className="border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 dark:bg-gray-800"
                 >
                   <CardContent className="p-6">
-                    <div className="text-blue-600 dark:text-blue-400 mb-4">{feature.icon}</div>
+                    <div className="text-blue-600 dark:text-blue-400 mb-4">
+                      {feature.icon}
+                    </div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400">{feature.description}</p>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {feature.description}
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -368,15 +380,15 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg"
+              className="bg-white text-blue-600 hover:bg-gray-300 px-8 py-3 text-lg"
             >
               Download Now
             </Button>
 
             <Button
               size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 px-8 py-3 text-lg"
+              // variant="outline"
+              className="bg-white text-blue-600 hover:bg-gray-300 px-8 py-3 text-lg"
             >
               Contact Sales
             </Button>

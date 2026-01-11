@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Lock, Eye, Fingerprint, Server, BadgeCheck } from "lucide-react";
+import {
+  Shield,
+  Lock,
+  Eye,
+  Fingerprint,
+  Server,
+  BadgeCheck,
+} from "lucide-react";
 
 interface SecurityFeature {
   id: number;
@@ -30,7 +37,8 @@ const SecuritySection = ({
           id: 1,
           icon: <Lock className="h-8 w-8" />,
           title: "256-bit Encryption",
-          description: "All data is encrypted using bank-grade AES-256 encryption",
+          description:
+            "All data is encrypted using bank-grade AES-256 encryption",
         },
         {
           id: 2,
@@ -60,7 +68,7 @@ const SecuritySection = ({
           id: 6,
           icon: <BadgeCheck className="h-8 w-8" />,
           title: "Regulatory Compliance",
-          description: "Licensed and regulated by Bangladesh Bank",
+          description: "Licensed",
         },
       ]);
 
@@ -87,14 +95,21 @@ const SecuritySection = ({
           <div className="inline-flex items-center justify-center h-16 w-16 bg-blue-600 rounded-full mb-4">
             <Shield className="h-8 w-8 text-white" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">{subtitle}</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            {title}
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            {subtitle}
+          </p>
         </div>
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className="bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700">
+              <Card
+                key={i}
+                className="bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700"
+              >
                 <CardContent className="p-6">
                   <SkeletonCard />
                 </CardContent>
@@ -114,8 +129,12 @@ const SecuritySection = ({
                       {feature.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-1">{feature.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">{feature.description}</p>
+                      <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-1">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">
+                        {feature.description}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -135,7 +154,7 @@ const SecuritySection = ({
           </div>
           <div className="flex items-center gap-2">
             <BadgeCheck className="h-5 w-5 text-green-500" />
-            <span>Bangladesh Bank Licensed</span>
+            <span> Licensed</span>
           </div>
         </div>
       </div>

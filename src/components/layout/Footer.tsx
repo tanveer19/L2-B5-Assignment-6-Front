@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-              MyWallet
+              Manage Money
             </h2>
             <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
               A secure and easy way to send, receive, and manage money — just
@@ -71,7 +71,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>support@mywallet.com</span>
+                <span>support@ManageMoney.com</span>
               </li>
             </ul>
           </div>

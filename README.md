@@ -1,4 +1,4 @@
-Wallet & Transaction Management System
+Money Management System
 
 📖 Project Overview
 
@@ -64,8 +64,6 @@ Backend
 Tools & Others
 
 📦 pnpm (fast package manager)
-
-🔄 Prisma / Mongoose middleware for DB logic
 
 🌍 Live URL https://l2-b5-assignment-6-front.vercel.app/
 
