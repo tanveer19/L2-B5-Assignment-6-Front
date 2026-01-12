@@ -68,12 +68,12 @@ export function LoginForm({
     } catch (err: any) {
       console.error(err);
 
-      if (err?.data?.message === "Password does not match") {
-        toast.error("Invalid credentials");
-      }
       if (err?.data?.message === "User is not verified") {
         toast.error("Your account is not verified");
         navigate("/verify", { state: data.phone });
+      } else {
+        // Show error for invalid credentials or any other login failure
+        toast.error(err?.data?.message || "Invalid phone or password");
       }
     }
   };
@@ -131,6 +131,47 @@ export function LoginForm({
             </Button>
           </form>
         </Form>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Quick Login
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2">
+          <Button
+            type="button"
+            onClick={() => {
+              form.setValue("phone", "01600123456");
+              form.setValue("password", "qBQWid6uKMKYnP8@@");
+            }}
+          >
+            Login as User
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              form.setValue("phone", "01700123456");
+              form.setValue("password", "qBQWid6uKMKYnP8@@");
+            }}
+          >
+            Login as Agent
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              form.setValue("phone", "01800123456");
+              form.setValue("password", "qBQWid6uKMKYnP8@@");
+            }}
+          >
+            Login as Admin
+          </Button>
+        </div>
       </div>
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
